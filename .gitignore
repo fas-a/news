@@ -2,5 +2,40 @@ back_end/venv
 back_end/__pycache__
 back_end/*.pyc
 back_end/.env
-.vscode
-.envrc
+back_end/.vscode
+back_end/.envrc
+
+# Logs
+front_end/logs
+front_end/*.log
+front_end/npm-debug.log*
+front_end/yarn-debug.log*
+front_end/yarn-error.log*
+front_end/pnpm-debug.log*
+front_end/lerna-debug.log*
+
+# Dependencies
+front_end/node_modules
+front_end/.pnp
+front_end/.pnp.js
+
+# Build
+front_end/dist
+front_end/dist-ssr
+front_end/*.local
+
+# Editor directories and files
+front_end/.vscode/*
+front_end/!.vscode/extensions.json
+front_end/.idea
+front_end/.DS_Store
+front_end/*.suo
+front_end/*.ntvs*
+front_end/*.njsproj
+front_end/*.sln
+front_end/*.sw?
+
+# Environment variables
+front_end/.env
+front_end/.env.local
+front_end/.env.*.local
