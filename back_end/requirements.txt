@@ -5,3 +5,7 @@ pymongo
 dotenv
 uvicorn
 pymongo[srv]
+pydantic
+datetime
+bson
+jwt
