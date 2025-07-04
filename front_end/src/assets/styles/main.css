@@ -371,6 +371,22 @@ body {
         flex-direction: column;
     }
 }
+.topbar-menu-horizontal {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+}
+.topbar-menu-list-horizontal {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.topbar-menu-item-horizontal {
+  display: flex;
+  align-items: center;
+}
 
 .topbar-title {
     font-size: 1.25rem;
