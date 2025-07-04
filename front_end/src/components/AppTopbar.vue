@@ -26,6 +26,10 @@ const items = ref([
     route: "/about",
   },
 ]);
+const showMobileMenu = ref(false);
+function toggleMobileMenu() {
+  showMobileMenu.value = !showMobileMenu.value;
+}
 </script>
 
 <template>
@@ -54,6 +58,9 @@ const items = ref([
           <span class="topbar-subtitle">Update</span>
         </span>
       </div>
+      <button class="topbar-hamburger" @click="toggleMobileMenu">
+        <i class="pi pi-bars"></i>
+      </button>
       <div class="topbar-menu-horizontal">
         <ul class="topbar-menu-list-horizontal">
           <li
@@ -85,6 +92,31 @@ const items = ref([
           </li>
         </ul>
       </div>
+      <transition name="fade">
+        <div class="topbar-menu-mobile" v-if="showMobileMenu">
+          <ul>
+            <li v-for="item in items" :key="item.label">
+              <router-link
+                v-if="item.route"
+                :to="item.route"
+                class="topbar-menu-link"
+                :class="{ active: route.path === item.route }"
+                @click="showMobileMenu = false"
+              >
+                <Button :label="item.label" :icon="item.icon" text rounded />
+              </router-link>
+              <Button
+                v-else
+                :label="item.label"
+                :icon="item.icon"
+                text
+                rounded
+                @click="item.command && item.command()"
+              />
+            </li>
+          </ul>
+        </div>
+      </transition>
       <div class="topbar-actions">
         <Button
           type="button"
@@ -128,5 +160,54 @@ const items = ref([
   background-color: var(--p-primary-50);
   color: var(--p-primary-500);
   font-weight: bold;
+}
+.topbar-hamburger {
+  color: var(--p-primary-500);
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .topbar-container {
+    flex-wrap: wrap;
+    padding: 0.5rem 1rem;
+  }
+  .topbar-menu-horizontal {
+    display: none;
+  }
+  .topbar-hamburger {
+    display: block;
+  }
+  .topbar-menu-mobile {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--surface-0, #fff);
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+    z-index: 1000;
+    position: absolute;
+    padding: 1rem 0;
+  }
+  .topbar-menu-mobile ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .topbar-menu-mobile li {
+    margin: 0.5rem 1.5rem;
+  }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
 </style>

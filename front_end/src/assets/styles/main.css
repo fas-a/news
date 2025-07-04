@@ -342,6 +342,7 @@ body {
     margin-right: auto;
     border: 1px solid var(--p-surface-200);
     width: 100%;
+    position: relative;
 }
 
 .p-dark .topbar {

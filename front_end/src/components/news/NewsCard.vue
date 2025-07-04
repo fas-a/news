@@ -2,6 +2,21 @@
 defineProps({
   item: Object
 });
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const wibOffset = 7 * 60;
+    const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+    const wibDate = new Date(utc + (wibOffset * 60000));
+    const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric'
+    };
+    const formattedDate = wibDate.toLocaleDateString('id-ID', options);
+    const hours = wibDate.getHours().toString().padStart(2, '0');
+    const minutes = wibDate.getMinutes().toString().padStart(2, '0');
+    return `${formattedDate}, ${hours}:${minutes} WIB`;
+}
 </script>
 <template>
   <router-link :to="`/news/${item.id}`" class="news-card-link">
@@ -17,7 +32,7 @@ defineProps({
         <div class="card-title">{{ item.title }}</div>
       </template>
       <template #subtitle>
-        {{ item.date }} | {{ item.authors }}
+        {{ formatDate(item.date) }} | {{ item.authors }}
       </template>
       <template #content>
         <div class="card-content">
@@ -82,5 +97,17 @@ defineProps({
   -webkit-line-clamp: 4;
   line-clamp: 4;
   max-height: 5.6em;
+}
+
+@media (max-width: 768px) {
+  .news-card {
+    flex-direction: column;
+    height: auto;
+  }
+  .news-thumbnail {
+    width: 100%;
+    height: 150px;
+    border-radius: 8px 8px 0 0;
+  }
 }
 </style>
