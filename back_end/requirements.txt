@@ -1,0 +1,7 @@
+pyjwt
+fastapi
+bcrypt
+pymongo
+dotenv
+uvicorn
+pymongo[srv]
