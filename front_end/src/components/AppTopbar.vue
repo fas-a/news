@@ -125,8 +125,8 @@ const items = ref([
 
 <style scoped>
 .topbar-menu-link.active .p-button {
-  background-color: var(--p-surface-100);
-  color: var(--p-surface-900);
+  background-color: var(--p-primary-50);
+  color: var(--p-primary-500);
   font-weight: bold;
 }
 </style>
