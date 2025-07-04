@@ -6,6 +6,7 @@ import { ref } from "vue";
 
 const router = useRouter();
 const route = useRoute();
+const token = localStorage.getItem("token");
 
 const { isDarkMode, toggleDarkMode } = useLayout();
 
@@ -26,6 +27,12 @@ const items = ref([
     route: "/about",
   },
 ]);
+
+function logout() {
+  localStorage.removeItem("token");
+  router.push({ name: "login" });
+}
+
 const showMobileMenu = ref(false);
 function toggleMobileMenu() {
   showMobileMenu.value = !showMobileMenu.value;
@@ -149,6 +156,25 @@ function toggleMobileMenu() {
             aria-label="Settings"
           />
           <AppConfig />
+        </div>
+        <div class="relative">
+            <Button
+            v-if="token"
+            icon="pi pi-sign-out"
+            text
+            rounded
+            @click="logout()"
+            />
+            <router-link
+            v-else
+            :to="{ name: 'login' }"
+            >
+            <Button
+              icon="pi pi-sign-in"
+              text
+              rounded
+            />
+            </router-link>
         </div>
       </div>
     </div>

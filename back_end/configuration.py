@@ -10,4 +10,5 @@ uri = os.getenv("DB_URL")
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 db = client[os.getenv("DB_NAME")]
-news_collection = db["news"]
+cost_factor = int(os.getenv("COST_FACTOR"))
+secret_key = os.getenv("SECRET_KEY")

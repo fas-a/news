@@ -62,33 +62,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.title-panel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-}
-.text-panel {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--p-text-color);
-    text-align: justify;
-    text-justify: inter-word;
-}
-.news-image {
-    width: 300px;
-    display: block;
-    margin: auto;
-}
-.date-author {
-    font-size: 0.9rem;
-    color: var(--p-secondary-500);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-</style>

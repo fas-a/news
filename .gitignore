@@ -1,6 +1,8 @@
 back_end/venv
 back_end/__pycache__
 back_end/*.pyc
+back_end/*/__pycache__
+back_end/*/*/__pycache__
 back_end/.env
 back_end/.vscode
 back_end/.envrc
