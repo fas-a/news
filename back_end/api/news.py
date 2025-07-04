@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from configuration import db
 from db.schemas.news import news_list, individual_news
 from db.models.news import News
@@ -9,8 +9,8 @@ router = APIRouter()
 collection = db["news"]
 
 @router.get("/news")
-async def get_all_news():
-    data = collection.find()
+async def get_all_news(skip: int = Query(0, ge=0), limit: int = Query(10, ge=1, le=100)):
+    data = collection.find().skip(skip).limit(limit)
     return news_list(data)
 
 @router.post("/news")
@@ -20,6 +20,10 @@ async def create_news(news_item : News):
         return {"status_code":200, "id":str(response.inserted_id)}
     except Exception as e:
         return HTTPException(status_code=500, detail=f"Some error ocured {e}")
+
+@router.get("/news/count")
+async def get_news_count():
+    return {"count": collection.count_documents({})}
     
 @router.get("/news/{news_id}")
 async def get_news_by_id(news_id: str):
@@ -52,3 +56,4 @@ async def delete_news(news_id:str):
         return {"status_code":200, "message": "News Deleted Successfully"}
     except Exception as e:
         return HTTPException(status_code=500, detail=f"Some error occured {e}")
+    

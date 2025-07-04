@@ -1,10 +1,11 @@
 <script setup>
 import { useLayout } from "../composables/useLayout";
 import AppConfig from "./AppConfig.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
 const router = useRouter();
+const route = useRoute();
 
 const { isDarkMode, toggleDarkMode } = useLayout();
 
@@ -64,6 +65,7 @@ const items = ref([
               v-if="item.route"
               :to="item.route"
               class="topbar-menu-link"
+              :class="{ active: route.path === item.route }"
             >
               <Button
                 :label="item.label"
@@ -120,3 +122,11 @@ const items = ref([
     </div>
   </div>
 </template>
+
+<style scoped>
+.topbar-menu-link.active .p-button {
+  background-color: var(--p-surface-100);
+  color: var(--p-surface-900);
+  font-weight: bold;
+}
+</style>
