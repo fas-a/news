@@ -11,6 +11,8 @@ import News from "./views/News.vue";
 import DetailNews from "./views/DetailNews.vue";
 import Login from "./views/Login.vue";
 import SignUp from "./views/SignUp.vue";
+import NewsAdmin from "./views/NewsAdmin.vue";
+import FormNews from "./views/FormNews.vue";
 
 async function validateTokenWithBackend() {
   const token = localStorage.getItem("token");
@@ -60,6 +62,18 @@ const routes = [
     component: SignUp, 
     name: "sign-up",
     meta: { guestOnly: true }
+  },
+  {
+    path: "/admin/news",
+    component: NewsAdmin,
+    name: "news-admin",
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/admin/news/new",
+    component: FormNews,
+    name: "add-news",
+    meta: { requiresAuth: true }
   },
 ];
 

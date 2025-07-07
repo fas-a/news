@@ -19,7 +19,6 @@ function goTo(p) {
   if (p !== props.page) emit("change", p);
 }
 
-// Generate array halaman (maksimal 5 tombol, dengan ... jika banyak halaman)
 const pageNumbers = computed(() => {
   const total = totalPage.value;
   const current = props.page;

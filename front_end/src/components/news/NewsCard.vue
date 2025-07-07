@@ -37,7 +37,7 @@ function formatDate(dateString) {
       <template #content>
         <div class="card-content">
           <p class="m-0 card-snippet">
-            {{ item.content?.slice(0, 300) }}...
+            {{ item.content?.slice(0, 300) }}...  
           </p>
         </div>
       </template>

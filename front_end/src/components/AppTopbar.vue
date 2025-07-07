@@ -27,7 +27,30 @@ const items = ref([
     route: "/about",
   },
 ]);
+const menu = ref();
+const admin = ref([
+    {
+        label: 'Admin',
+        items: [
+            {
+                label: 'Admin News',
+                icon: 'pi pi-list',
+                route: '/admin/news'
+            },
+            {
+                label: 'Sign Out',
+                icon: 'pi pi-sign-out',
+                command: () => {
+                    logout();
+                }
+            }
+        ]
+    }
+]);
 
+const toggle = (event) => {
+    menu.value.toggle(event);
+};
 function logout() {
   localStorage.removeItem("token");
   router.push({ name: "login" });
@@ -160,21 +183,37 @@ function toggleMobileMenu() {
         <div class="relative">
             <Button
             v-if="token"
-            icon="pi pi-sign-out"
+            icon="pi pi-user"
             text
             rounded
-            @click="logout()"
+            @click="toggle" 
+            aria-haspopup="true" 
+            aria-controls="overlay_menu"
             />
             <router-link
             v-else
             :to="{ name: 'login' }"
             >
             <Button
-              icon="pi pi-sign-in"
-              text
-              rounded
+            icon="pi pi-sign-in"
+            text
+            rounded
             />
-            </router-link>
+          </router-link>
+          <Menu ref="menu" id="overlay_menu" :model="admin" :popup="true">
+                        <template #item="{ item, props }">
+                <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                    <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                        <span :class="item.icon" />
+                        <span class="ml-2">{{ item.label }}</span>
+                    </a>
+                </router-link>
+                <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+                    <span :class="item.icon" />
+                    <span class="ml-2">{{ item.label }}</span>
+                </a>
+            </template>
+          </Menu>
         </div>
       </div>
     </div>

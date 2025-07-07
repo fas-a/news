@@ -1,8 +1,10 @@
 from fastapi import APIRouter, HTTPException, Query
-from configuration import db
+from configuration import db, secret_key
 from db.schemas.news import news_list, individual_news
 from db.models.news import News
 from bson import ObjectId
+from datetime import datetime
+import jwt
 
 router = APIRouter()
 
@@ -16,6 +18,9 @@ async def get_all_news(skip: int = Query(0, ge=0), limit: int = Query(10, ge=1, 
 @router.post("/news")
 async def create_news(news_item : News):
     try:
+        news_item.date = datetime.now()
+        payload = jwt.decode(news_item.authors, secret_key, algorithms=["HS256"])
+        news_item.authors = payload['username']
         response = collection.insert_one(dict(news_item))
         return {"status_code":200, "id":str(response.inserted_id)}
     except Exception as e:

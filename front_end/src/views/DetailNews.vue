@@ -55,9 +55,7 @@ onMounted(() => {
       <Panel :header="newsDetail?.title" class="title-panel">
         <p class="date-author">{{ newsDetail.date }} | {{ newsDetail.authors }}</p>
         <img class="news-image" :src="newsDetail.thumbnail_url" alt="">
-        <p class="m-0 text-panel">
-          {{ newsDetail?.content }}
-        </p>
+        <div class="m-0 text-panel" v-html="newsDetail?.content"></div>
       </Panel>
     </div>
   </div>
