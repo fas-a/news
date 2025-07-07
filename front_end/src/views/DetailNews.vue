@@ -8,7 +8,7 @@ let newsDetail = ref(null);
 
 async function fetchNewsDetail() {
   try {
-    const res = await fetch(`http://localhost:8000/news/${id}`);
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/news/${id}`);
     if (!res.ok) throw new Error("Network response was not ok");
     newsDetail.value = await res.json();
     newsDetail.value.date = formatDate(newsDetail.value.date);

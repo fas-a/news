@@ -15,9 +15,9 @@ async function validateTokenWithBackend() {
   const token = localStorage.getItem("token");
   if (!token) return false;
   try {
-    const res = await fetch("http://localhost:8000/validate", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/validate`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       },
     });
     if (!res.ok) return false;
@@ -40,15 +40,13 @@ const routes = [
   { 
     path: "/news", 
     component: News, 
-    name: "news", 
-    meta: { requiresAuth: true } 
+    name: "news"
   },
   { 
     path: "/news/:id", 
     component: DetailNews, 
     props: true, 
-    name: "detail-news", 
-    meta: { requiresAuth: true } 
+    name: "detail-news"
   },
   { 
     path: "/login", 

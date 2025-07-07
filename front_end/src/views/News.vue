@@ -13,9 +13,9 @@ const total = ref(0);
 async function fetchNews() {
   loading.value = true;
   try {
-    const res = await fetch(`http://localhost:8000/news?skip=${(page.value - 1) * limit.value}&limit=${limit.value}`);
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/news?skip=${(page.value - 1) * limit.value}&limit=${limit.value}`);
     news.value = await res.json();
-    const countRes = await fetch("http://localhost:8000/news/count");
+    const countRes = await fetch(`${import.meta.env.VITE_API_URL}/news/count`);
     const countData = await countRes.json();
     total.value = countData.count;
   } catch (e) {
