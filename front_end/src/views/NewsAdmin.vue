@@ -1,6 +1,38 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 import Pagination from "../components/Pagination.vue";
+
+const confirm = useConfirm();
+const toast = useToast();
+
+const showTemplate = (id) => {
+    confirm.require({
+        group: 'templating',
+        header: 'Confirmation',
+        message: 'Are you sure want to delete?.',
+        icon: 'pi pi-exclamation-circle',
+        rejectProps: {
+            label: 'Cancel',
+            icon: 'pi pi-times',
+            outlined: true,
+            size: 'small'
+        },
+        acceptProps: {
+            label: 'Save',
+            icon: 'pi pi-check',
+            size: 'small'
+        },
+        accept: () => {
+            deleteNews(id);
+            toast.add({ severity: 'success', summary: 'Success', detail: 'Delete news success', life: 3000 });
+        },
+        reject: () => {
+            toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+    });
+};
 
 const news = ref([]);
 const loading = ref(true);
@@ -45,9 +77,36 @@ function formatDate(dateString) {
     const minutes = wibDate.getMinutes().toString().padStart(2, '0');
     return `${formattedDate}, ${hours}:${minutes} WIB`;
 }
+
+async function deleteNews(id) {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/news/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
+            }
+        });
+        if (res.ok) {
+            fetchNews();
+        } else {
+            alert("Failed to delete news.");
+        }
+    } catch (e) {
+        alert("Error deleting news.");
+    }
+}
 </script>
 
 <template>
+    <ConfirmDialog group="templating">
+        <template #message="slotProps">
+            <div class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
+                <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
+                <p>{{ slotProps.message.message }}</p>
+            </div>
+        </template>
+    </ConfirmDialog>
     <div class="card">
         <DataTable :value="news" tableStyle="min-width: 50rem">
             <template #header>
@@ -72,7 +131,7 @@ function formatDate(dateString) {
             <Column header="Actions">
                 <template #body="slotProps">
                     <Button icon="pi pi-pencil" class="mr-2" @click="$router.push(`/admin/news/${slotProps.data.id}/edit`)" />
-                    <Button icon="pi pi-trash" class="p-button-danger" @click="$emit('delete', slotProps.data.id)" />
+                    <Button icon="pi pi-trash" class="p-button-danger" @click="showTemplate(slotProps.data.id)" />
                 </template>
             </Column>
         </DataTable>

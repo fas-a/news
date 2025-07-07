@@ -1,4 +1,3 @@
-
 <template>
     <div class="card flex justify-center">
         <Menu :model="items" class="w-full md:w-60">
@@ -21,11 +20,28 @@
                 <span class="text-primary font-bold">{{ item.label }}</span>
             </template>
             <template #item="{ item, props }">
-                <a v-ripple class="flex items-center" v-bind="props.action">
+                <RouterLink
+                    v-if="item.to && item.label !== 'Logout'"
+                    v-ripple
+                    class="flex items-center"
+                    v-bind="props.action"
+                    :to="item.to"
+                >
                     <span :class="item.icon" />
                     <span>{{ item.label }}</span>
                     <Badge v-if="item.badge" class="ml-auto" :value="item.badge" />
                     <span v-if="item.shortcut" class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut }}</span>
+                </RouterLink>
+                <a
+                    v-else-if="item.label === 'Logout'"
+                    v-ripple
+                    class="flex items-center"
+                    v-bind="props.action"
+                    href="#"
+                    @click.prevent="logout"
+                >
+                    <span :class="item.icon" />
+                    <span>{{ item.label }}</span>
                 </a>
             </template>
         </Menu>
@@ -34,6 +50,9 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const items = ref([
     {
@@ -42,11 +61,17 @@ const items = ref([
     {
         label: 'News',
         icon: 'pi pi-list',
+        to: '/admin/news',
     },
     {
         label: 'Logout',
         icon: 'pi pi-sign-out',
+        to: '/logout',
     }
-
 ]);
+
+function logout() {
+  localStorage.removeItem("token");
+  router.push({ name: "login" });
+}
 </script>

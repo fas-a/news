@@ -11,21 +11,21 @@ const token = localStorage.getItem("token");
 const { isDarkMode, toggleDarkMode } = useLayout();
 
 const items = ref([
-  {
-    label: "Home",
-    icon: "pi pi-home",
-    route: "/",
-  },
+  // {
+  //   label: "Home",
+  //   icon: "pi pi-home",
+  //   route: "/",
+  // },
   {
     label: "News",
     icon: "pi pi-book",
     route: "/news",
   },
-  {
-    label: "About",
-    icon: "pi pi-info-circle",
-    route: "/about",
-  },
+  // {
+  //   label: "About",
+  //   icon: "pi pi-info-circle",
+  //   route: "/about",
+  // },
 ]);
 const menu = ref();
 const admin = ref([

@@ -3,6 +3,7 @@ import "./assets/styles/main.css";
 import { createApp } from "vue";
 import PrimeVue from "primevue/config";
 import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
 import App from "./App.vue";
 import Aura from "@primeuix/themes/aura";
 import { createRouter, createWebHistory } from "vue-router";
@@ -34,12 +35,12 @@ async function validateTokenWithBackend() {
 const app = createApp(App);
 
 const routes = [
-  { 
-    path: "/", 
-    component: Home, 
-    name: "home", 
-    meta: { requiresAuth: true } 
-  },
+  // { 
+  //   path: "/", 
+  //   component: Home, 
+  //   name: "home", 
+  //   meta: { requiresAuth: true } 
+  // },
   { 
     path: "/news", 
     component: News, 
@@ -131,5 +132,6 @@ app.use(PrimeVue, {
 });
 app.use(ToastService);
 app.use(router);
+app.use(ConfirmationService);
 
 app.mount("#app");
