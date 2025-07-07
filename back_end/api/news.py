@@ -42,7 +42,12 @@ async def get_news_by_id(news_id: str):
 async def update_news(news_id:str, updated_news:News):
     try:
         id = ObjectId(news_id)
-        data = collection.find_one({"_id":id})
+        data = collection.find_one({"_id": id})
+        if not data:
+            return HTTPException(status_code=404, detail="News does not exist")
+        updated_news.authors = data.get("authors", updated_news.authors)
+        updated_news.date = data.get("date", updated_news.date)
+        print(updated_news)
         if not data:
             return HTTPException(status_code=404, detail=f"News does not exits")
         response = collection.update_one({"_id":id}, {"$set": dict(updated_news)})

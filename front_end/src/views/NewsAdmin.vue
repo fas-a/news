@@ -71,7 +71,7 @@ function formatDate(dateString) {
             <Column field="authors" header="Authors"></Column>
             <Column header="Actions">
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil" class="mr-2" @click="$router.push(`/admin/news/${slotProps.data.id}`)" />
+                    <Button icon="pi pi-pencil" class="mr-2" @click="$router.push(`/admin/news/${slotProps.data.id}/edit`)" />
                     <Button icon="pi pi-trash" class="p-button-danger" @click="$emit('delete', slotProps.data.id)" />
                 </template>
             </Column>

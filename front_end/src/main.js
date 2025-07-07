@@ -75,6 +75,13 @@ const routes = [
     name: "add-news",
     meta: { requiresAuth: true }
   },
+  {
+    path: "/admin/news/:id/edit",
+    component: FormNews,
+    name: "edit-news",
+    props: true,
+    meta: { requiresAuth: true }
+  }
 ];
 
 const router = createRouter({
