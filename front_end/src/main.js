@@ -10,6 +10,7 @@ import Home from "./views/Home.vue";
 import News from "./views/News.vue";
 import DetailNews from "./views/DetailNews.vue";
 import Login from "./views/Login.vue";
+import SignUp from "./views/SignUp.vue";
 
 async function validateTokenWithBackend() {
   const token = localStorage.getItem("token");
@@ -52,6 +53,12 @@ const routes = [
     path: "/login", 
     component: Login, 
     name: "login",
+    meta: { guestOnly: true }
+  },
+  { 
+    path: "/sign-up", 
+    component: SignUp, 
+    name: "sign-up",
     meta: { guestOnly: true }
   },
 ];

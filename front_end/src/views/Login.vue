@@ -73,6 +73,9 @@ const showError = (message, detail_message) => {
           <Password v-model="password" toggleMask :feedback="false" placeholder="Password"/>
         </InputGroup>
         <Button @click="login()" label="Submit" class="button-center"/>
+        <router-link :to="{ name: 'sign-up' }" class="text-center">
+              Don't have an account?
+        </router-link>
     </Panel>
   </div>
 </template>
@@ -82,5 +85,10 @@ const showError = (message, detail_message) => {
   max-width: 500px;
   padding-top: 10rem;
 }
-
+.text-center {
+  text-align: center;
+  display: block;
+  margin-top: 1rem;
+  color: var(--primary-color);
+}
 </style>

@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException, Request, Depends
-from configuration import db, secret_key
-from db.models.auth import LoginRequest
+from configuration import db, secret_key, cost_factor
+from db.models.auth import LoginRequest, SignUpRequest
 from bcrypt import checkpw
 import jwt
 from datetime import datetime, timedelta
+import bcrypt
 
 router = APIRouter()
 
@@ -45,3 +46,25 @@ async def login(data: LoginRequest):
 @router.get("/validate")
 async def validate_token(payload: dict = Depends(verify_token)):
     return {"valid": True, "user": payload}
+
+@router.post("/sign-up")
+async def sign_up(data: SignUpRequest):
+    if collection.find_one({"username": data.username}):
+        raise HTTPException(status_code=400, detail="Username already exists")
+    if collection.find_one({"email": data.email}):
+        raise HTTPException(status_code=400, detail="Email already exists")
+    hashed_password = bcrypt.hashpw(
+        data.password.encode('utf-8'),
+        bcrypt.gensalt(rounds=cost_factor)
+    ).decode('utf-8')
+    new_user = {
+        "username": data.username,
+        "password": hashed_password,
+        "email": data.email
+    }
+    try:
+        collection.insert_one(new_user)
+        return {"status_code":200, "message": "User created successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error creating user: {e}")
+    

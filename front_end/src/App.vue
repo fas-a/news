@@ -9,7 +9,7 @@ let route = useRoute();
 <template>
     <Toast />
     <div class="layout-container">
-        <div v-if="route.path !== '/login'" class="layout-grid">
+        <div v-if="route.path !== '/login' && route.path !== '/sign-up'" class="layout-grid">
             <AppTopbar />
             <router-view /> 
             <AppFooter />
