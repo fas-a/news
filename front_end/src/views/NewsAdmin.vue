@@ -96,6 +96,26 @@ async function deleteNews(id) {
         alert("Error deleting news.");
     }
 }
+async function scrapNews() {
+    toast.add({ severity: 'info', summary: 'Info', detail: 'Sedang mengambil data...', life: 3000 });
+    try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/scrape-news`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
+            }
+        });
+        if (res.ok) {
+            toast.add({ severity: 'success', summary: 'Success', detail: 'Scrap news success', life: 3000 });
+            fetchNews();
+        } else {
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to scrap news', life: 3000 });
+        }
+    } catch (e) {
+        toast.add({ severity: 'error', summary: 'Error', detail: 'Error scrapping news', life: 3000 });
+    }
+}
 </script>
 
 <template>
@@ -113,7 +133,7 @@ async function deleteNews(id) {
                 <div class="flex flex-wrap items-center justify-between gap-2">
                     <span class="text-xl font-bold">News</span>
                     <Button icon="pi pi-plus" label="Add News" class="p-button-success" @click="$router.push('/admin/news/new')" />
-                    <Button icon="pi pi-refresh" rounded raised @click="fetchNews" />
+                    <Button icon="pi pi-download" rounded raised label="Scrap News" @click="scrapNews" />
                 </div>
             </template>
             <Column header="Thumbnail">

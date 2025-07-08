@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.news import router as news_router
 from api.auth import router as auth_router
 from configuration import cors
+from api.scrapper import router as scraper_router
 
 app = FastAPI()
 app.add_middleware(
@@ -14,3 +15,4 @@ app.add_middleware(
 )
 app.include_router(news_router)
 app.include_router(auth_router)
+app.include_router(scraper_router)
