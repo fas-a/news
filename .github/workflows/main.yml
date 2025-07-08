@@ -1,0 +1,14 @@
+name: Scheduled Scrape News
+
+on:
+  schedule:
+    - cron: '0 17 * * *'  # 17 UTC = 00:00 WIB
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call FastAPI Scrape Endpoint
+        run: |
+          curl -X POST "https://your-deployment-url/api/scrape-news"
