@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Call FastAPI Scrape Endpoint
         run: |
-          curl -X POST "https://your-deployment-url/api/scrape-news"
+          curl -X POST "https://back-end-eight-smoky.vercel.app/scrape-news"
